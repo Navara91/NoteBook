@@ -1,21 +1,26 @@
 package ru.geekbrains.notebook.domain;
 
+import androidx.annotation.Nullable;
+
 public class NoteEntity {
-    private int id;
+
+    @Nullable
+    private Integer id;
     private String title;
     private String details;
 
-    public NoteEntity(int id, String title, String details) {
+    public NoteEntity(@Nullable Integer id, String title, String details) {
         this.id = id;
         this.title = title;
         this.details = details;
     }
 
-    public int getId() {
+    @Nullable
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

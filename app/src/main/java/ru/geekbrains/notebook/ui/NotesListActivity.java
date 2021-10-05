@@ -10,10 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import ru.geekbrains.notebook.R;
+import ru.geekbrains.notebook.domain.NotesRepo;
+import ru.geekbrains.notebook.impl.NotesRepoImpl;
 
 public class NotesListActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+
+    private NotesRepo notesRepo = new NotesRepoImpl();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
