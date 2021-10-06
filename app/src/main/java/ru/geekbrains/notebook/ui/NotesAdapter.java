@@ -3,6 +3,7 @@ package ru.geekbrains.notebook.ui;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,9 +17,11 @@ import ru.geekbrains.notebook.domain.NoteEntity;
 public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
 
     private List<NoteEntity> data = new ArrayList<>();
+    private OnItemClickListener clickListener = null;
 
     public void setData(List<NoteEntity> data) {
         this.data = data;
+        notifyDataSetChanged();
     }
 
 
@@ -32,6 +35,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
     @Override
     public void onBindViewHolder(@NonNull NoteVh holder, int position) {
         NoteEntity note = getItem(position);
+        holder.itemView.setOnClickListener(v -> clickListener.onItemClick(note));
         holder.titleTextView.setText(note.getTitle());
         holder.detailTextView.setText(note.getDetails());
     }
@@ -44,4 +48,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
     public int getItemCount() {
         return data.size();
     }
+
+    void setOnItemClickListener(OnItemClickListener listener){
+        clickListener = listener;
+    }
+
+    interface OnItemClickListener{
+        void onItemClick(NoteEntity item);
+    }
+
 }
