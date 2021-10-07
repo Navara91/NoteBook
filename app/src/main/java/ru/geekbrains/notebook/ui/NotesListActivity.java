@@ -2,6 +2,7 @@ package ru.geekbrains.notebook.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
@@ -18,6 +19,8 @@ import ru.geekbrains.notebook.domain.NoteEntity;
 import ru.geekbrains.notebook.domain.NotesRepo;
 import ru.geekbrains.notebook.impl.NotesRepoImpl;
 
+import static ru.geekbrains.notebook.utils.Constants.KEY_SAVEINSTANCE;
+
 public class NotesListActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -25,6 +28,8 @@ public class NotesListActivity extends AppCompatActivity {
 
     private NotesRepo notesRepo = new NotesRepoImpl();
     private NotesAdapter adapter = new NotesAdapter();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,8 @@ public class NotesListActivity extends AppCompatActivity {
 
     private void openNoteScreen(@Nullable NoteEntity item) {
         Intent intent = new Intent(this, NoteEditActivity.class);
+        Log.d("mylogs", "start intent");
+        intent.putExtra(KEY_SAVEINSTANCE, item);
         startActivity(intent);
     }
 

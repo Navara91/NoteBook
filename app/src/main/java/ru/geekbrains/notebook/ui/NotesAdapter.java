@@ -1,5 +1,6 @@
 package ru.geekbrains.notebook.ui;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
     @Override
     public void onBindViewHolder(@NonNull NoteVh holder, int position) {
         NoteEntity note = getItem(position);
-        holder.itemView.setOnClickListener(v -> clickListener.onItemClick(note));
+//        holder.itemView.setOnClickListener(v ->
+//                clickListener.onItemClick(note)
+//                Log.d("mylogs", "test")
+//        );
+
+        holder.noteItemView.setOnClickListener (v ->
+            clickListener.onItemClick(note)
+        );
         holder.titleTextView.setText(note.getTitle());
         holder.detailTextView.setText(note.getDetails());
     }
