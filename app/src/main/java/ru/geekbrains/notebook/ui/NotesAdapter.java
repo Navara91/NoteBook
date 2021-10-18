@@ -1,10 +1,9 @@
 package ru.geekbrains.notebook.ui;
 
-import android.util.Log;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,26 +28,22 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
     @NonNull
     @Override
     public NoteVh onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent,
+                false);
         return new NoteVh(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NoteVh holder, int position) {
         NoteEntity note = getItem(position);
-//        holder.itemView.setOnClickListener(v ->
-//                clickListener.onItemClick(note)
-//                Log.d("mylogs", "test")
-//        );
-
-        holder.noteItemView.setOnClickListener (v ->
-            clickListener.onItemClick(note)
+        holder.noteItemView.setOnClickListener(v ->
+                clickListener.onItemClick(note)
         );
         holder.titleTextView.setText(note.getTitle());
         holder.detailTextView.setText(note.getDetails());
     }
 
-    private NoteEntity getItem (int position){
+    private NoteEntity getItem(int position) {
         return data.get(position);
     }
 
@@ -57,11 +52,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
         return data.size();
     }
 
-    void setOnItemClickListener(OnItemClickListener listener){
+    void setOnItemClickListener(OnItemClickListener listener) {
         clickListener = listener;
     }
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         void onItemClick(NoteEntity item);
     }
 
