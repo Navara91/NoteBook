@@ -1,14 +1,10 @@
 package ru.geekbrains.notebook.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -19,18 +15,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-
 import ru.geekbrains.notebook.R;
 import ru.geekbrains.notebook.domain.NoteEntity;
 import ru.geekbrains.notebook.domain.NotesRepo;
 import ru.geekbrains.notebook.impl.NotesRepoImpl;
 
 import static ru.geekbrains.notebook.utils.Constants.ALL_NOTES_CODE;
-import static ru.geekbrains.notebook.utils.Constants.DETAIL_SAVEINSTANCE;
-import static ru.geekbrains.notebook.utils.Constants.ID_SAVEINSTANCE;
 import static ru.geekbrains.notebook.utils.Constants.KEY_SAVEINSTANCE;
-import static ru.geekbrains.notebook.utils.Constants.TITLE_SAVEINSTANCE;
 
 public class NotesListActivity extends AppCompatActivity {
 
