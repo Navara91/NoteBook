@@ -16,9 +16,9 @@ public class NoteEditFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static NoteEditFragment newInstance() {
-
-    }
+//    public static NoteEditFragment newInstance() {
+//
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

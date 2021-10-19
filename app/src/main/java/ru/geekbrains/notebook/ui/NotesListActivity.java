@@ -59,7 +59,8 @@ public class NotesListActivity extends AppCompatActivity {
     }
 
     private void fillRepoValues() {
-        noteEditActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        noteEditActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 Intent intent = result.getData();
                 notesRepo.setAllNotes(intent.getParcelableArrayListExtra(ALL_NOTES_CODE));
