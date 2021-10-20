@@ -18,6 +18,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
 
     private List<NoteEntity> data = new ArrayList<>();
     private OnItemClickListener clickListener = null;
+    private NoteListFragment.InterfaceOpenEditFragment interfaceOpenEditFragment = null;
 
     public void setData(List<NoteEntity> data) {
         this.data = data;
@@ -37,7 +38,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
     public void onBindViewHolder(@NonNull NoteVh holder, int position) {
         NoteEntity note = getItem(position);
         holder.noteItemView.setOnClickListener(v ->
-                clickListener.onItemClick(note)
+                interfaceOpenEditFragment.showEditFragment(note)
         );
         holder.titleTextView.setText(note.getTitle());
         holder.detailTextView.setText(note.getDetails());
@@ -52,8 +53,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
         return data.size();
     }
 
-    void setOnItemClickListener(OnItemClickListener listener) {
-        clickListener = listener;
+//    void setOnItemClickListener(OnItemClickListener listener) {
+//        clickListener = listener;
+//    }
+
+    void setOnItemClickListener(NoteListFragment.InterfaceOpenEditFragment listener) {
+        interfaceOpenEditFragment = listener;
     }
 
     interface OnItemClickListener {

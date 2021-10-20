@@ -31,7 +31,7 @@ import ru.geekbrains.notebook.impl.NotesRepoImpl;
 import static ru.geekbrains.notebook.utils.Constants.ALL_NOTES_CODE;
 import static ru.geekbrains.notebook.utils.Constants.KEY_SAVEINSTANCE;
 
-public class NoteListFragment extends Fragment {
+public class NoteListFragment extends Fragment implements NotesAdapter.OnItemClickListener {
 
 
     private RecyclerView recyclerView;
@@ -86,13 +86,13 @@ public class NoteListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(this::onItemClick);
+        adapter.setOnItemClickListener(InterfaceOpenEditFragment::showEditFragment);
         adapter.setData(notesRepo.getNotes());
     }
 
-    private void onItemClick(NoteEntity item) {
-        interfaceOpenEditFragment.showEditFragment(item);
-    }
+//    public void onItemClick(NoteEntity item) {
+//        interfaceOpenEditFragment.showEditFragment(item);
+//    }
 
     private void fillRepoByTestValues() {
         notesRepo.createNote(new NoteEntity("заметка 1",

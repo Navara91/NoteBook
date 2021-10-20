@@ -12,11 +12,15 @@ import android.view.View;
 
 import ru.geekbrains.notebook.R;
 import ru.geekbrains.notebook.domain.NoteEntity;
+import ru.geekbrains.notebook.domain.NotesRepo;
+import ru.geekbrains.notebook.impl.NotesRepoImpl;
 
 public class MainActivity extends AppCompatActivity implements NoteListFragment.InterfaceOpenEditFragment {
 
     private Toolbar toolbar;
     private NoteListFragment noteListFragment = new NoteListFragment();
+    private NotesRepo notesRepo = new NotesRepoImpl(getParent());
+    private NotesAdapter adapter = new NotesAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +66,12 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
                     .hide(noteListFragment)
                     .commit();
         } else {
-
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .hide(noteListFragment)
+                    .add(R.id.fragment_container, NoteEditFragment.newInstance(item, notesRepo.getNotes()))
+                    .addToBackStack(null)
+                    .commit();
         }
 
 
