@@ -1,21 +1,20 @@
 package ru.geekbrains.notebook.ui;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 import ru.geekbrains.notebook.R;
 import ru.geekbrains.notebook.domain.NoteEntity;
 import ru.geekbrains.notebook.domain.NotesRepo;
 import ru.geekbrains.notebook.impl.NotesRepoImpl;
 
-public class MainActivity extends AppCompatActivity implements NoteListFragment.InterfaceOpenEditFragment {
+public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private NoteListFragment noteListFragment = new NoteListFragment();
@@ -27,12 +26,13 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initToolbar();
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container, noteListFragment)
                 .commit();
 
-        initToolbar();
     }
 
     @Override
@@ -55,10 +55,8 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
         setSupportActionBar(toolbar);
     }
 
-
-    @Override
     public void showEditFragment(@Nullable NoteEntity item) {
-        if (item == null){
+        if (item == null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container, new NoteEditFragment())
@@ -73,7 +71,5 @@ public class MainActivity extends AppCompatActivity implements NoteListFragment.
                     .addToBackStack(null)
                     .commit();
         }
-
-
     }
 }

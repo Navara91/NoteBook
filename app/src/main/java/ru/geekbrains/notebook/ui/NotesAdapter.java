@@ -1,6 +1,5 @@
 package ru.geekbrains.notebook.ui;
 
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +16,12 @@ import ru.geekbrains.notebook.domain.NoteEntity;
 public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
 
     private List<NoteEntity> data = new ArrayList<>();
-    private OnItemClickListener clickListener = null;
-    private NoteListFragment.InterfaceOpenEditFragment interfaceOpenEditFragment = null;
+    private MainActivity mainActivity;
 
     public void setData(List<NoteEntity> data) {
         this.data = data;
         notifyDataSetChanged();
     }
-
 
     @NonNull
     @Override
@@ -38,7 +35,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
     public void onBindViewHolder(@NonNull NoteVh holder, int position) {
         NoteEntity note = getItem(position);
         holder.noteItemView.setOnClickListener(v ->
-                interfaceOpenEditFragment.showEditFragment(note)
+                mainActivity.showEditFragment(note)
         );
         holder.titleTextView.setText(note.getTitle());
         holder.detailTextView.setText(note.getDetails());
@@ -53,16 +50,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
         return data.size();
     }
 
-//    void setOnItemClickListener(OnItemClickListener listener) {
-//        clickListener = listener;
-//    }
-
-    void setOnItemClickListener(NoteListFragment.InterfaceOpenEditFragment listener) {
-        interfaceOpenEditFragment = listener;
+    void setOnItemClickListener(MainActivity listener){
+        mainActivity = listener;
     }
-
-    interface OnItemClickListener {
-        void onItemClick(NoteEntity item);
-    }
-
 }

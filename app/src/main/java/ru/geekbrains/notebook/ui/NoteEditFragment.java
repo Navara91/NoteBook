@@ -61,14 +61,16 @@ public class NoteEditFragment extends Fragment {
     }
 
     private void fillViews() {
-//        if (Bundle == null) {
-            Bundle args = getArguments();
+        Bundle args = getArguments();
+        if (args != null) {
             allNotes = args.getParcelableArrayList(ALL_NOTES_CODE);
             note = args.getParcelable(KEY_SAVEINSTANCE);
             titleEditText.setText(note.getTitle());
             detailEditText.setText(note.getDetails());
-//        }
-
+        } else {
+            titleEditText.setText("");
+            detailEditText.setText("");
+        }
     }
 
     public static NoteEditFragment newInstance(NoteEntity note, ArrayList<NoteEntity> allNotes){
