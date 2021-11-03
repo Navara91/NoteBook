@@ -2,6 +2,7 @@ package ru.geekbrains.notebook.impl;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 
 import ru.geekbrains.notebook.domain.NoteEntity;
 import ru.geekbrains.notebook.domain.NotesRepo;
+import ru.geekbrains.notebook.ui.MainActivity;
+import ru.geekbrains.notebook.ui.NoteEditFragment;
 
 import static ru.geekbrains.notebook.utils.Constants.ALL_NOTES_CODE;
 import static ru.geekbrains.notebook.utils.Constants.KEY_SAVEINSTANCE;
@@ -24,6 +27,7 @@ public class NotesRepoImpl implements NotesRepo {
 
     @Override
     public ArrayList<NoteEntity> getNotes() {
+//        activity.setData(allNotes);
         return new ArrayList<>(allNotes);
     }
 

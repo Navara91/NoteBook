@@ -1,8 +1,9 @@
 package ru.geekbrains.notebook.ui;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,9 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import java.util.ArrayList;
 
 import ru.geekbrains.notebook.R;
 import ru.geekbrains.notebook.domain.NoteEntity;
@@ -21,18 +20,15 @@ import ru.geekbrains.notebook.impl.NotesRepoImpl;
 
 public class NoteListFragment extends Fragment {
 
+    private static final String TAG = "@@@";
     private RecyclerView recyclerView;
     private NotesRepo notesRepo = new NotesRepoImpl(getActivity());
     private NotesAdapter adapter = new NotesAdapter();
-    private boolean isFirstLaunch = true;
-    private Activity activity;
+    private NoteEntity note = null;
+    private ArrayList<NoteEntity> allNotes = null;
+    private View viewByInitRecycler;
 
-    public NoteListFragment(){}
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        activity = ((MainActivity) context);
+    public NoteListFragment() {
     }
 
     @Override
@@ -45,25 +41,12 @@ public class NoteListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        if (savedInstanceState == null) {
+        viewByInitRecycler = view;
+        if (savedInstanceState == null) {
             fillRepoByTestValues();
-//            fillRepoValues();
+        }
 
-
-            initRecycler(view);
-//        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-//        if (isFirstLaunch == false) {
-//            initRecycler();
-//        } else {
-//            isFirstLaunch = false;
-//        }
+        initRecycler(view);
     }
 
     private void initRecycler(View view) {
@@ -97,8 +80,9 @@ public class NoteListFragment extends Fragment {
                 "какой-то длинный текст ывафывафыfdsgdfgsdfgagdfgsв"));
         notesRepo.createNote(new NoteEntity("заметка 11",
                 "какой-то длинный текст ывафывафыfdsgdfgsdfgagdfgsв"));
-        isFirstLaunch = false;
     }
 
-
+    public void reInitRecycler() {
+        initRecycler(viewByInitRecycler);
+    }
 }

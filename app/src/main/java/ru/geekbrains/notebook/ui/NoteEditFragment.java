@@ -1,12 +1,12 @@
 package ru.geekbrains.notebook.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.geekbrains.notebook.R;
 import ru.geekbrains.notebook.domain.NoteEntity;
 import ru.geekbrains.notebook.domain.NotesRepo;
+import ru.geekbrains.notebook.domain.OnSendDataFromEditFragment;
 import ru.geekbrains.notebook.impl.NotesRepoImpl;
 
 import static ru.geekbrains.notebook.utils.Constants.ALL_NOTES_CODE;
@@ -30,7 +32,20 @@ public class NoteEditFragment extends Fragment {
     private Button saveButton = null;
     private NoteEntity note = null;
     private NotesRepo notesRepo = new NotesRepoImpl(getActivity());
-    private ArrayList<NoteEntity> allNotes = null;
+    private ArrayList<NoteEntity> allNotes;
+    private List<NoteEntity> data = new ArrayList<>();
+    private OnSendDataFromEditFragment editFragmentListener;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof OnSendDataFromEditFragment){
+            editFragmentListener = (OnSendDataFromEditFragment) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnSendDataFromEditFragment");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,16 +69,25 @@ public class NoteEditFragment extends Fragment {
     };
 
     private void setupViews() {
-
         saveButton.setOnClickListener(v -> {
-
+            note.setTitle(titleEditText.getText().toString());
+            note.setDetails(detailEditText.getText().toString());
+            Bundle args = getArguments();
+            allNotes = args.getParcelableArrayList(ALL_NOTES_CODE);
+            notesRepo.setAllNotes(allNotes);
+            notesRepo.setNoteContent(note);
+            editFragmentListener.onSendDataFromEditFragment();
+            closeFragment();
         });
+    }
+
+    private void closeFragment() {
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     private void fillViews() {
         Bundle args = getArguments();
         if (args != null) {
-            allNotes = args.getParcelableArrayList(ALL_NOTES_CODE);
             note = args.getParcelable(KEY_SAVEINSTANCE);
             titleEditText.setText(note.getTitle());
             detailEditText.setText(note.getDetails());
@@ -81,5 +105,4 @@ public class NoteEditFragment extends Fragment {
         noteEditFragment.setArguments(bundle);
         return noteEditFragment;
     }
-
 }

@@ -8,17 +8,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import ru.geekbrains.notebook.R;
 import ru.geekbrains.notebook.domain.NoteEntity;
 
 public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
 
-    private List<NoteEntity> data = new ArrayList<>();
+    private ArrayList<NoteEntity> data = new ArrayList<>();
     private MainActivity mainActivity;
 
-    public void setData(List<NoteEntity> data) {
+    public void setData(ArrayList<NoteEntity> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -35,7 +34,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteVh> {
     public void onBindViewHolder(@NonNull NoteVh holder, int position) {
         NoteEntity note = getItem(position);
         holder.noteItemView.setOnClickListener(v ->
-                mainActivity.showEditFragment(note)
+                mainActivity.showEditFragment(note, data)
         );
         holder.titleTextView.setText(note.getTitle());
         holder.detailTextView.setText(note.getDetails());
