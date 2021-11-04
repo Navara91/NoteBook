@@ -27,7 +27,6 @@ public class NotesRepoImpl implements NotesRepo {
 
     @Override
     public ArrayList<NoteEntity> getNotes() {
-//        activity.setData(allNotes);
         return new ArrayList<>(allNotes);
     }
 
@@ -63,12 +62,12 @@ public class NotesRepoImpl implements NotesRepo {
     }
 
     @Override
-    public boolean saveNote(NoteEntity note, ArrayList<NoteEntity> allNotes) {
+    public boolean saveNote(String title, String detail, NoteEntity note, ArrayList<NoteEntity> allNotes) {
 
-        Intent intent = new Intent();
-        intent.putExtra(KEY_SAVEINSTANCE, note);
-        intent.putParcelableArrayListExtra(ALL_NOTES_CODE, allNotes);
-        activity.setResult(Activity.RESULT_OK, intent);
+        note.setTitle(title);
+        note.setDetails(detail);
+        setAllNotes(allNotes);
+        setNoteContent(note);
         return true;
     }
 }

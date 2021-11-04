@@ -19,7 +19,7 @@ import java.util.List;
 import ru.geekbrains.notebook.R;
 import ru.geekbrains.notebook.domain.NoteEntity;
 import ru.geekbrains.notebook.domain.NotesRepo;
-import ru.geekbrains.notebook.domain.OnSendDataFromEditFragment;
+import ru.geekbrains.notebook.domain.DataTransferFromEditFragment;
 import ru.geekbrains.notebook.impl.NotesRepoImpl;
 
 import static ru.geekbrains.notebook.utils.Constants.ALL_NOTES_CODE;
@@ -34,13 +34,13 @@ public class NoteEditFragment extends Fragment {
     private NotesRepo notesRepo = new NotesRepoImpl(getActivity());
     private ArrayList<NoteEntity> allNotes;
     private List<NoteEntity> data = new ArrayList<>();
-    private OnSendDataFromEditFragment editFragmentListener;
+    private DataTransferFromEditFragment editFragmentListener;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context instanceof OnSendDataFromEditFragment){
-            editFragmentListener = (OnSendDataFromEditFragment) context;
+        if (context instanceof DataTransferFromEditFragment){
+            editFragmentListener = (DataTransferFromEditFragment) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnSendDataFromEditFragment");
@@ -70,13 +70,11 @@ public class NoteEditFragment extends Fragment {
 
     private void setupViews() {
         saveButton.setOnClickListener(v -> {
-            note.setTitle(titleEditText.getText().toString());
-            note.setDetails(detailEditText.getText().toString());
-            Bundle args = getArguments();
-            allNotes = args.getParcelableArrayList(ALL_NOTES_CODE);
-            notesRepo.setAllNotes(allNotes);
-            notesRepo.setNoteContent(note);
-            editFragmentListener.onSendDataFromEditFragment();
+
+            String titleGetText = titleEditText.getText().toString();
+            String detailGetText = detailEditText.getText().toString();
+            notesRepo.saveNote(titleGetText, detailGetText, note, allNotes);
+            editFragmentListener.reInitRecyclerAfterSavingData();
             closeFragment();
         });
     }
@@ -89,6 +87,7 @@ public class NoteEditFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             note = args.getParcelable(KEY_SAVEINSTANCE);
+            allNotes = args.getParcelableArrayList(ALL_NOTES_CODE);
             titleEditText.setText(note.getTitle());
             detailEditText.setText(note.getDetails());
         } else {

@@ -44,9 +44,10 @@ public class NoteListFragment extends Fragment {
         viewByInitRecycler = view;
         if (savedInstanceState == null) {
             fillRepoByTestValues();
+            initRecycler(view);
         }
 
-        initRecycler(view);
+
     }
 
     private void initRecycler(View view) {

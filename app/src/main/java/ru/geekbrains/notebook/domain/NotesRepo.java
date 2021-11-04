@@ -12,5 +12,5 @@ public interface NotesRepo {
     @Nullable
     Integer createNote(NoteEntity note);
     boolean deleteNote(int id);
-    boolean saveNote(NoteEntity note, ArrayList<NoteEntity> allNotes);
+    boolean saveNote(String titleGetText, String detailGetText, NoteEntity note, ArrayList<NoteEntity> allNotes);
 }

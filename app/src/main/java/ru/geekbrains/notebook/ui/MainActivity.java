@@ -15,10 +15,10 @@ import java.util.List;
 import ru.geekbrains.notebook.R;
 import ru.geekbrains.notebook.domain.NoteEntity;
 import ru.geekbrains.notebook.domain.NotesRepo;
-import ru.geekbrains.notebook.domain.OnSendDataFromEditFragment;
+import ru.geekbrains.notebook.domain.DataTransferFromEditFragment;
 import ru.geekbrains.notebook.impl.NotesRepoImpl;
 
-public class MainActivity extends AppCompatActivity implements OnSendDataFromEditFragment {
+public class MainActivity extends AppCompatActivity implements DataTransferFromEditFragment {
 
     private Toolbar toolbar;
     private NoteListFragment noteListFragment = new NoteListFragment();
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnSendDataFromEdi
     }
 
     @Override
-    public void onSendDataFromEditFragment() {
+    public void reInitRecyclerAfterSavingData() {
         noteListFragment.reInitRecycler();
     }
 
