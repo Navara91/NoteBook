@@ -19,11 +19,6 @@ import static ru.geekbrains.notebook.utils.Constants.KEY_SAVEINSTANCE;
 public class NotesRepoImpl implements NotesRepo {
     private ArrayList<NoteEntity> allNotes = new ArrayList<>();
     private int counter = 0;
-    private Activity activity = null;
-
-    public NotesRepoImpl(Activity mainActivity) {
-        this.activity = mainActivity;
-    }
 
     @Override
     public ArrayList<NoteEntity> getNotes() {
@@ -43,7 +38,7 @@ public class NotesRepoImpl implements NotesRepo {
 
     @Nullable
     @Override
-    public Integer createNote(NoteEntity note) {
+    public Integer createNote(@Nullable NoteEntity note) {
         int newId = counter++;
         note.setId(newId);
         allNotes.add(note);

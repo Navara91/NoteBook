@@ -1,6 +1,7 @@
 package ru.geekbrains.notebook.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +19,15 @@ import ru.geekbrains.notebook.domain.NoteEntity;
 import ru.geekbrains.notebook.domain.NotesRepo;
 import ru.geekbrains.notebook.impl.NotesRepoImpl;
 
+import static ru.geekbrains.notebook.utils.Constants.ALL_NOTES_CODE;
+import static ru.geekbrains.notebook.utils.Constants.ALL_NOTES_SAVEINSTANCE;
+
 public class NoteListFragment extends Fragment {
 
     private static final String TAG = "@@@";
     private RecyclerView recyclerView;
-    private NotesRepo notesRepo = new NotesRepoImpl(getActivity());
+    private NotesRepo notesRepo = new NotesRepoImpl();
     private NotesAdapter adapter = new NotesAdapter();
-    private NoteEntity note = null;
-    private ArrayList<NoteEntity> allNotes = null;
-    private View viewByInitRecycler;
 
     public NoteListFragment() {
     }
@@ -41,13 +42,27 @@ public class NoteListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewByInitRecycler = view;
-        if (savedInstanceState == null) {
+        Log.d(TAG, "onViewCreated ListFragment called");
+
+        if (savedInstanceState != null)
+            loadInstance();
+
+        if (notesRepo.getNotes().size() == 0)
             fillRepoByTestValues();
-            initRecycler(view);
-        }
 
+        initRecycler(view);
+        saveInstance();
+    }
 
+    private void loadInstance() {
+        Bundle argsAfter = getArguments();
+        notesRepo.setAllNotes(argsAfter.getParcelableArrayList(ALL_NOTES_SAVEINSTANCE));
+    }
+
+    private void saveInstance(){
+        Bundle argsBefore = new Bundle();
+        argsBefore.putParcelableArrayList(ALL_NOTES_SAVEINSTANCE, notesRepo.getNotes());
+        setArguments(argsBefore);
     }
 
     private void initRecycler(View view) {
@@ -81,9 +96,5 @@ public class NoteListFragment extends Fragment {
                 "какой-то длинный текст ывафывафыfdsgdfgsdfgagdfgsв"));
         notesRepo.createNote(new NoteEntity("заметка 11",
                 "какой-то длинный текст ывафывафыfdsgdfgsdfgagdfgsв"));
-    }
-
-    public void reInitRecycler() {
-        initRecycler(viewByInitRecycler);
     }
 }
