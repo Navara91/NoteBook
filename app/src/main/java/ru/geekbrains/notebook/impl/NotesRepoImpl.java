@@ -38,7 +38,7 @@ public class NotesRepoImpl implements NotesRepo {
 
     @Nullable
     @Override
-    public Integer createNote(@Nullable NoteEntity note) {
+    public Integer createNote(@Nullable NoteEntity note/*, @Nullable ArrayList<NoteEntity> allNotes*/) {
         int newId = counter++;
         note.setId(newId);
         allNotes.add(note);
@@ -61,8 +61,8 @@ public class NotesRepoImpl implements NotesRepo {
 
         note.setTitle(title);
         note.setDetails(detail);
-        setAllNotes(allNotes);
         setNoteContent(note);
+        setAllNotes(allNotes);
         return true;
     }
 }

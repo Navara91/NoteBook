@@ -19,7 +19,6 @@ import ru.geekbrains.notebook.domain.NoteEntity;
 import ru.geekbrains.notebook.domain.NotesRepo;
 import ru.geekbrains.notebook.impl.NotesRepoImpl;
 
-import static ru.geekbrains.notebook.utils.Constants.ALL_NOTES_CODE;
 import static ru.geekbrains.notebook.utils.Constants.ALL_NOTES_SAVEINSTANCE;
 
 public class NoteListFragment extends Fragment {
@@ -29,13 +28,13 @@ public class NoteListFragment extends Fragment {
     private NotesRepo notesRepo = new NotesRepoImpl();
     private NotesAdapter adapter = new NotesAdapter();
 
-    public NoteListFragment() {
+    public void setNotesRepo(NotesRepo newNotesRepo) {
+        notesRepo = newNotesRepo;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_note_list, container, false);
     }
 
@@ -52,6 +51,10 @@ public class NoteListFragment extends Fragment {
 
         initRecycler(view);
         saveInstance();
+    }
+
+    ArrayList<NoteEntity> getCurrentAllNotes(){
+        return notesRepo.getNotes();
     }
 
     private void loadInstance() {
@@ -93,8 +96,6 @@ public class NoteListFragment extends Fragment {
         notesRepo.createNote(new NoteEntity("заметка 9",
                 "какой-то длинный текст ывафывафыfdsgdfgsdfgagdfgsв"));
         notesRepo.createNote(new NoteEntity("заметка 10",
-                "какой-то длинный текст ывафывафыfdsgdfgsdfgagdfgsв"));
-        notesRepo.createNote(new NoteEntity("заметка 11",
                 "какой-то длинный текст ывафывафыfdsgdfgsdfgagdfgsв"));
     }
 }

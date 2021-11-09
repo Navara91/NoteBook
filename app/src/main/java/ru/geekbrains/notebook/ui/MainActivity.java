@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NoteListFragment noteListFragment = new NoteListFragment();
 
+    public void setNoteRepo(NotesRepo newNotesRepo) {
+        noteListFragment.setNotesRepo(newNotesRepo);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.new_note_menu) {
-            showEditFragment(null, null);
+            showEditFragment(null, noteListFragment.getCurrentAllNotes());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -62,18 +66,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showEditFragment(@Nullable NoteEntity item, @Nullable ArrayList<NoteEntity> allNotes) {
-        if (item == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new NoteEditFragment())
-                    .addToBackStack(null)
-                    .commit();
-        } else {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, NoteEditFragment.newInstance(item, allNotes))
                     .addToBackStack(null)
                     .commit();
-        }
     }
 }
