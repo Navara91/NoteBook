@@ -2,6 +2,7 @@ package ru.geekbrains.notebook.impl;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 
 import ru.geekbrains.notebook.domain.NoteEntity;
 import ru.geekbrains.notebook.domain.NotesRepo;
+import ru.geekbrains.notebook.ui.MainActivity;
+import ru.geekbrains.notebook.ui.NoteEditFragment;
 
 import static ru.geekbrains.notebook.utils.Constants.ALL_NOTES_CODE;
 import static ru.geekbrains.notebook.utils.Constants.KEY_SAVEINSTANCE;
@@ -16,11 +19,6 @@ import static ru.geekbrains.notebook.utils.Constants.KEY_SAVEINSTANCE;
 public class NotesRepoImpl implements NotesRepo {
     private ArrayList<NoteEntity> allNotes = new ArrayList<>();
     private int counter = 0;
-    private Activity activity = null;
-
-    public NotesRepoImpl(Activity mainActivity) {
-        this.activity = mainActivity;
-    }
 
     @Override
     public ArrayList<NoteEntity> getNotes() {
@@ -40,7 +38,7 @@ public class NotesRepoImpl implements NotesRepo {
 
     @Nullable
     @Override
-    public Integer createNote(NoteEntity note) {
+    public Integer createNote(@Nullable NoteEntity note/*, @Nullable ArrayList<NoteEntity> allNotes*/) {
         int newId = counter++;
         note.setId(newId);
         allNotes.add(note);
@@ -59,12 +57,12 @@ public class NotesRepoImpl implements NotesRepo {
     }
 
     @Override
-    public boolean saveNote(NoteEntity note, ArrayList<NoteEntity> allNotes) {
+    public boolean saveNote(String title, String detail, NoteEntity note, ArrayList<NoteEntity> allNotes) {
 
-        Intent intent = new Intent();
-        intent.putExtra(KEY_SAVEINSTANCE, note);
-        intent.putParcelableArrayListExtra(ALL_NOTES_CODE, allNotes);
-        activity.setResult(Activity.RESULT_OK, intent);
+        note.setTitle(title);
+        note.setDetails(detail);
+        setNoteContent(note);
+        setAllNotes(allNotes);
         return true;
     }
 }
